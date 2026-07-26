@@ -1,0 +1,71 @@
+Glyphchain Device Owner Firmware License
+
+Copyright © 2026 Paul Scalise. All rights reserved.
+
+1. Ownership
+
+This repository and its contents, including firmware images, manifests,
+documentation, scripts, and related materials (collectively, the "Materials"),
+are owned by Paul Scalise and are protected by copyright and other applicable
+intellectual-property laws.
+
+2. Device Owner Permission
+
+If you lawfully own a genuine Glyphchain device, or have the device owner's
+express authorization, you may:
+
+- download and make backup copies of official Glyphchain firmware;
+- inspect, analyze, reverse engineer, modify, adapt, and create derivative
+  firmware;
+- install and use official or modified firmware on that Glyphchain device; and
+- share modifications noncommercially with other lawful Glyphchain device
+  owners, provided that the modifications are clearly identified as unofficial
+  and include this license and copyright notice.
+
+You may also use the published manifests, checksums, signatures, and public
+verification keys to verify official Glyphchain firmware.
+
+3. Restrictions
+
+You may not:
+
+- use the Materials to access, control, alter, or obtain data from a device,
+  account, or service without the owner's authorization;
+- claim or imply that modified firmware is official, approved, certified, or
+  digitally signed by Paul Scalise or Glyphchain;
+- attach an official Glyphchain manifest or signature to modified firmware;
+- remove or misrepresent copyright, attribution, or proprietary notices;
+- sell, sublicense, or commercially distribute the Materials or modified
+  firmware without prior written permission; or
+- use the Materials to manufacture or market a competing device or product.
+
+No patent, trademark, trade-secret, or other intellectual-property license is
+granted except for the permissions expressly stated above. "Glyphchain" may be
+used solely as necessary to identify compatibility; this license grants no
+right to use Glyphchain branding as a source identifier.
+
+4. Public Repository Access
+
+This license does not restrict the limited rights necessary to view and fork
+this public repository through GitHub as permitted by GitHub's Terms of Service.
+No additional rights are granted by making this repository publicly accessible.
+
+5. Modified Firmware
+
+Modified firmware is unsupported and is installed entirely at the device
+owner's risk. Installing modified firmware may cause data loss, device failure,
+loss of update compatibility, or loss of access to official support.
+
+6. Disclaimer
+
+THE MATERIALS ARE PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR
+A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.
+
+7. Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, PAUL SCALISE WILL NOT BE LIABLE FOR ANY
+INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES,
+OR FOR ANY LOSS OF DATA, PROFITS, REVENUE, OR DEVICE FUNCTIONALITY, ARISING
+FROM OR RELATED TO THE MATERIALS, MODIFIED FIRMWARE, OR THEIR USE.
+

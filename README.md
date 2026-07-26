@@ -35,3 +35,11 @@ an authenticity guarantee.
 `channels/stable.json` and `channels/beta.json` identify the current release for
 each update channel. A `null` release means that no public update has been
 promoted to that channel.
+
+## License
+
+Copyright © 2026 Paul Scalise. All rights reserved.
+
+Lawful Glyphchain device owners may inspect, modify, and install firmware on
+devices they own or are authorized to control. See the
+[Glyphchain Device Owner Firmware License](LICENSE) for the complete terms.
