@@ -6,18 +6,72 @@ from __future__ import annotations
 import base64
 import binascii
 import json
+import re
+import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+SENSITIVE_PATTERNS = (
+    (
+        "absolute macOS user path",
+        re.compile(b"/" + b"Users" + b"/" + rb"[^/\s]+/"),
+    ),
+    (
+        "private source-repository reference",
+        re.compile(b"ble-keychain" + b"-vscode"),
+    ),
+    (
+        "personal email address",
+        re.compile(b"paulscalise" + b"@" + b"icloud\\.com"),
+    ),
+    (
+        "PEM private-key material",
+        re.compile(b"-----BEGIN " + rb"[A-Z0-9 ]*" + b"PRIVATE KEY-----"),
+    ),
+    (
+        "GitHub token",
+        re.compile(b"github_" + rb"pat_[A-Za-z0-9_]{20,}"),
+    ),
+    (
+        "GitHub classic token",
+        re.compile(b"gh" + rb"[pousr]_[A-Za-z0-9]{30,}"),
+    ),
+    (
+        "AWS access key",
+        re.compile(b"AK" + rb"IA[0-9A-Z]{16}"),
+    ),
+    (
+        "assigned secret-key value",
+        re.compile(b"SECRET" + rb"[_-]?KEY\s*="),
+    ),
+)
+
+
+def tracked_paths() -> list[Path]:
+    result = subprocess.run(
+        ["git", "ls-files", "-z"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+    )
+    return [
+        ROOT / raw_path.decode("utf-8")
+        for raw_path in result.stdout.split(b"\0")
+        if raw_path
+    ]
 
 
 def main() -> int:
     errors: list[str] = []
 
-    for path in ROOT.rglob("*.json"):
-        if ".git" in path.parts or "dist" in path.parts:
-            continue
+    try:
+        repository_paths = tracked_paths()
+    except (OSError, UnicodeError, subprocess.CalledProcessError) as error:
+        print(f"error: unable to list tracked files: {error}", file=sys.stderr)
+        return 1
+
+    for path in (path for path in repository_paths if path.suffix == ".json"):
         try:
             json.loads(path.read_text(encoding="utf-8"))
         except (OSError, UnicodeError, json.JSONDecodeError) as error:
@@ -95,9 +149,7 @@ def main() -> int:
     except (OSError, UnicodeError, json.JSONDecodeError) as error:
         errors.append(f"keys/keyring.json: {error}")
 
-    for path in ROOT.rglob("*"):
-        if not path.is_file() or ".git" in path.parts or "dist" in path.parts:
-            continue
+    for path in repository_paths:
         lowered = path.name.lower()
         if lowered.endswith(".hex"):
             errors.append(
@@ -105,8 +157,27 @@ def main() -> int:
             )
         if "factory" in lowered and lowered.endswith((".hex", ".bin")):
             errors.append(f"{path.relative_to(ROOT)}: factory image must not be distributed")
-        if lowered.endswith((".pem", ".key", ".p8")) or "private-key" in lowered:
+        if (
+            lowered.endswith((".pem", ".key", ".p8", ".p12", ".pfx", ".jks", ".keystore"))
+            or "private-key" in lowered
+            or "private_key" in lowered
+            or "secret-key" in lowered
+            or "secret_key" in lowered
+            or lowered == ".env"
+            or lowered.startswith(".env.")
+        ):
             errors.append(f"{path.relative_to(ROOT)}: possible private signing key")
+        if lowered.endswith(".b64") and not lowered.endswith("-public-key.b64"):
+            errors.append(f"{path.relative_to(ROOT)}: unrecognized Base64 key material")
+
+        try:
+            content = path.read_bytes()
+        except OSError as error:
+            errors.append(f"{path.relative_to(ROOT)}: {error}")
+            continue
+        for description, pattern in SENSITIVE_PATTERNS:
+            if pattern.search(content):
+                errors.append(f"{path.relative_to(ROOT)}: possible {description}")
 
     if errors:
         print("\n".join(f"error: {error}" for error in errors), file=sys.stderr)
