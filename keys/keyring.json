@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "keys": [
+    {
+      "keyID": "glyphchain-release-2026-01",
+      "algorithm": "Ed25519",
+      "publicKeyFile": "glyphchain-release-2026-01-public-key.b64",
+      "status": "active",
+      "createdAt": "2026-07-26"
+    }
+  ]
+}
+

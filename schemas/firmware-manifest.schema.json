@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://firmware.glyphchain.com/schemas/firmware-manifest.schema.json",
+  "title": "Glyphchain firmware release manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "releaseID",
+    "version",
+    "buildNumber",
+    "signingKeyID",
+    "model",
+    "hardwareRevision",
+    "otaProtocolVersion",
+    "applicationStart",
+    "applicationCapacity",
+    "mandatory",
+    "publishedAt",
+    "releaseNotes",
+    "image"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "releaseID": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$"
+    },
+    "buildNumber": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "signingKeyID": {
+      "type": "string",
+      "pattern": "^glyphchain-release-[0-9]{4}-[0-9]{2}$"
+    },
+    "model": {
+      "const": "G1"
+    },
+    "hardwareRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "otaProtocolVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 255
+    },
+    "applicationStart": {
+      "const": 4096
+    },
+    "applicationCapacity": {
+      "const": 45056
+    },
+    "mandatory": {
+      "type": "boolean"
+    },
+    "publishedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "releaseNotes": {
+      "type": "string"
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fileName",
+        "format",
+        "downloadURL",
+        "downloadSize",
+        "imageLength",
+        "crc32",
+        "sha256"
+      ],
+      "properties": {
+        "fileName": {
+          "type": "string",
+          "const": "Glyphchain-Firmware.hex"
+        },
+        "format": {
+          "const": "intel-hex"
+        },
+        "downloadURL": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "downloadSize": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "imageLength": {
+          "type": "integer",
+          "minimum": 8,
+          "maximum": 45056,
+          "multipleOf": 4
+        },
+        "crc32": {
+          "type": "string",
+          "pattern": "^[0-9A-F]{8}$"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

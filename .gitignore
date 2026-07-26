@@ -1,0 +1,21 @@
+.DS_Store
+dist/
+__pycache__/
+*.pyc
+.env
+.env.*
+/.secrets/
+/OPERATIONS.local.md
+
+# Firmware signing keys must never be committed.
+*.key
+*.pem
+*.p8
+*.p12
+*.pfx
+*.jks
+*.keystore
+*private-key*
+*private_key*
+*secret-key*
+*secret_key*

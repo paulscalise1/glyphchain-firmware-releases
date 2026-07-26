@@ -1,0 +1,23 @@
+name: Validate distribution metadata
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate metadata
+        run: python3 scripts/validate_repository.py
+
+      - name: Compile packaging script
+        run: python3 -m py_compile scripts/prepare_release.py scripts/validate_repository.py
+

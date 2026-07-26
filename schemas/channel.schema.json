@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://firmware.glyphchain.com/schemas/channel.schema.json",
+  "title": "Glyphchain firmware channel",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "channel",
+    "release"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "channel": {
+      "enum": [
+        "stable",
+        "beta"
+      ]
+    },
+    "release": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "releaseID",
+            "version",
+            "buildNumber",
+            "manifestURL",
+            "signatureURL"
+          ],
+          "properties": {
+            "releaseID": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$"
+            },
+            "buildNumber": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "manifestURL": {
+              "type": "string",
+              "pattern": "^https://"
+            },
+            "signatureURL": {
+              "type": "string",
+              "pattern": "^https://"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
