@@ -1,6 +1,11 @@
 {
   "schemaVersion": 1,
   "channel": "beta",
-  "release": null
+  "release": {
+    "releaseID": "glyphchain-g1-v1.0.1",
+    "version": "1.0.1",
+    "buildNumber": 101,
+    "manifestURL": "https://github.com/paulscalise1/glyphchain-firmware-releases/releases/download/firmware-v1.0.1/glyphchain-g1-v1.0.1.manifest.json",
+    "signatureURL": "https://github.com/paulscalise1/glyphchain-firmware-releases/releases/download/firmware-v1.0.1/glyphchain-g1-v1.0.1.manifest.sig"
+  }
 }
-
