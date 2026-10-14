@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://firmware.glyphchain.com/schemas/recovery-manifest.schema.json",
+  "title": "Glyphchain USB recovery manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "kind",
+    "releaseID",
+    "version",
+    "buildNumber",
+    "signingKeyID",
+    "model",
+    "hardwareRevision",
+    "chip",
+    "publishedAt",
+    "image"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "kind": {
+      "const": "glyphchain-recovery"
+    },
+    "releaseID": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$"
+    },
+    "buildNumber": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "signingKeyID": {
+      "type": "string",
+      "pattern": "^glyphchain-release-[0-9]{4}-[0-9]{2}$"
+    },
+    "model": {
+      "const": "G1"
+    },
+    "hardwareRevision": {
+      "type": "string",
+      "minLength": 1
+    },
+    "chip": {
+      "const": "CH592"
+    },
+    "publishedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fileName",
+        "format",
+        "downloadURL",
+        "downloadSize",
+        "flashEnd",
+        "sha256"
+      ],
+      "properties": {
+        "fileName": {
+          "const": "Glyphchain-OTA-Factory.hex"
+        },
+        "format": {
+          "const": "intel-hex"
+        },
+        "downloadURL": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "downloadSize": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "flashEnd": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 327680
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

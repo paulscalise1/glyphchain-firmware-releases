@@ -16,7 +16,8 @@
     "channel": {
       "enum": [
         "stable",
-        "beta"
+        "beta",
+        "recovery"
       ]
     },
     "release": {

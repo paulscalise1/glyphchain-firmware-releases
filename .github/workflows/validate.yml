@@ -19,5 +19,5 @@ jobs:
         run: python3 scripts/validate_repository.py
 
       - name: Compile packaging script
-        run: python3 -m py_compile scripts/prepare_release.py scripts/validate_repository.py
+        run: python3 -m py_compile scripts/prepare_release.py scripts/prepare_recovery.py scripts/validate_repository.py
 

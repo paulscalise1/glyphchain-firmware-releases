@@ -77,7 +77,14 @@ def main() -> int:
         except (OSError, UnicodeError, json.JSONDecodeError) as error:
             errors.append(f"{path.relative_to(ROOT)}: {error}")
 
-    for channel_name in ("stable", "beta"):
+    # The apps read stable/beta and must only ever see application manifests;
+    # the recovery channel must only ever point at recovery manifests.
+    manifest_suffixes = {
+        "stable": (".manifest.json", ".manifest.sig"),
+        "beta": (".manifest.json", ".manifest.sig"),
+        "recovery": (".recovery.json", ".recovery.sig"),
+    }
+    for channel_name, (manifest_suffix, signature_suffix) in manifest_suffixes.items():
         path = ROOT / "channels" / f"{channel_name}.json"
         try:
             channel = json.loads(path.read_text(encoding="utf-8"))
@@ -103,6 +110,14 @@ def main() -> int:
                 for key in ("manifestURL", "signatureURL"):
                     if not str(release.get(key, "")).startswith("https://"):
                         errors.append(f"{path.relative_to(ROOT)}: {key} must use HTTPS")
+                if not str(release.get("manifestURL", "")).endswith(manifest_suffix):
+                    errors.append(
+                        f"{path.relative_to(ROOT)}: manifestURL must end in {manifest_suffix}"
+                    )
+                if not str(release.get("signatureURL", "")).endswith(signature_suffix):
+                    errors.append(
+                        f"{path.relative_to(ROOT)}: signatureURL must end in {signature_suffix}"
+                    )
         except (OSError, UnicodeError, json.JSONDecodeError) as error:
             errors.append(f"{path.relative_to(ROOT)}: {error}")
 
@@ -155,8 +170,6 @@ def main() -> int:
             errors.append(
                 f"{path.relative_to(ROOT)}: firmware belongs in GitHub Release assets"
             )
-        if "factory" in lowered and lowered.endswith((".hex", ".bin")):
-            errors.append(f"{path.relative_to(ROOT)}: factory image must not be distributed")
         if (
             lowered.endswith((".pem", ".key", ".p8", ".p12", ".pfx", ".jks", ".keystore"))
             or "private-key" in lowered
