@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "channel": "recovery",
   "release": {
-    "releaseID": "glyphchain-g1-v1.0.7",
-    "version": "1.0.7",
-    "buildNumber": 107,
-    "manifestURL": "https://github.com/paulscalise1/glyphchain-firmware-releases/releases/download/firmware-v1.0.7/glyphchain-g1-v1.0.7.recovery.json",
-    "signatureURL": "https://github.com/paulscalise1/glyphchain-firmware-releases/releases/download/firmware-v1.0.7/glyphchain-g1-v1.0.7.recovery.sig"
+    "releaseID": "glyphchain-g1-v1.0.8",
+    "version": "1.0.8",
+    "buildNumber": 108,
+    "manifestURL": "https://github.com/paulscalise1/glyphchain-firmware-releases/releases/download/firmware-v1.0.8/glyphchain-g1-v1.0.8.recovery.json",
+    "signatureURL": "https://github.com/paulscalise1/glyphchain-firmware-releases/releases/download/firmware-v1.0.8/glyphchain-g1-v1.0.8.recovery.sig"
   }
 }
